@@ -14,7 +14,7 @@ app.get('/', async (req, res) => {
     res.send('Used server is running');
 });
 
-app.listen(port, () => console.log(`Used server running on ${port}`))
+app.listen(port, () => console.log(`Used server also runnig running on ${port}`))
 
 
 
