@@ -18,6 +18,8 @@ async function run() {
     try{
         const categoriesCollection = client.db('furnitureZone').collection('categories');
         const productsCollection = client.db('furnitureZone').collection('products');
+        const usersCollection = client.db('furnitureZone').collection('users');
+        const bookingCollection = client.db('furnitureZone').collection('bookings');
 
         app.get('/categoryName' , async(req, res) =>{
             const query = {};
@@ -31,7 +33,24 @@ async function run() {
             const allProducts = await productsCollection.find(query).toArray();
             const products = allProducts.filter(product => product.category_id === id);
             res.send(products);
-        })
+        });
+
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            const result = await usersCollection.insertOne(user);
+            res.send(result);
+        });
+        app.get('/users', async (req, res) => {
+            const query = {};
+            const users = await usersCollection.find(query).toArray();
+            res.send(users);
+        });
+
+        app.post('/bookings', async (req, res) => {
+            const user = req.body;
+            const result = await bookingCollection.insertOne(user);
+            res.send(result);
+        });
 
 
     }
