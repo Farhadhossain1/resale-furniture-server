@@ -94,6 +94,26 @@ async function run() {
             res.send(result);
         })
 
+        // My Product Go to Advertise------------------>>>>>>>>>>>>
+        app.put("/advertise/:id", async(req, res)=>{
+            const id = req.params.id;
+            const filter = {_id: ObjectId(id)};
+            const options = {upsert: true};
+            const  updateDoc = {
+                $set: {
+                    advertising: "yes"
+                }
+            }
+            const result = await productsCollection.updateOne(filter, updateDoc, options);
+            res.send(result);
+        })
+
+        // Display Advertise  Products------------------------
+        app.get("/advertises", async(req, res)=>{
+            const query = {advertising: "yes"};
+            const result = await productsCollection.find(query).toArray();
+            res.send(result);
+        })
 
     }
     finally{
