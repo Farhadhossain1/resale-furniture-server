@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { json } = require('express');
 require('dotenv').config();
 const port = process.env.PORT || 5000;
 
@@ -27,11 +28,11 @@ async function run() {
             res.send(categories);
         });
 
-        app.get('/categoryName/:id' , async(req, res) =>{
-            const id = req.params.id;
+        app.get('/categoryName/:name' , async(req, res) =>{
+            const name = req.params.name;
             const query = {};
             const allProducts = await productsCollection.find(query).toArray();
-            const products = allProducts.filter(product => product.category_id === id);
+            const products = allProducts.filter(product => product.category_name === name);
             res.send(products);
         });
 
@@ -82,6 +83,14 @@ async function run() {
             const email = req.query.email;
             const query = {email};
             const result = await productsCollection.find(query).toArray();
+            res.send(result);
+        })
+
+        // My Products Delete-------------------
+        app.delete("/products/:id", async(req,res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result =await productsCollection.deleteOne(query);
             res.send(result);
         })
 
