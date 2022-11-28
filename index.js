@@ -57,6 +57,24 @@ async function run() {
             res.send({ isAdmin: user?.role === 'admin' });
         })
 
+        // Seller Will See------------------------
+        app.get("/users/seller/:email", async(req, res) =>{
+            const email = req.params.email;
+            const query = {email};
+            const seller = await usersCollection.findOne(query);
+            res.send({isSeller:  seller?.role === "Seller"});
+        })
+
+        // Buyer Will See------------------------
+        app.get("/users/buyer/:email", async(req, res) =>{
+            const email = req.params.email;
+            const query = {email};
+            const buyer = await usersCollection.findOne(query);
+            res.send({isBuyer:  buyer?.role === "Buyer"});
+        })
+
+        // 
+
         // get data
 
         app.get('/bookings' , async(req,res) =>{
