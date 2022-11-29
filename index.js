@@ -88,6 +88,15 @@ async function run() {
             res.send(result);
         })
 
+        // Delete All Buyer--------->>
+        app.delete("/buyers/:id", async(req, res)=>{
+            const id = req.params.id;
+            console.log(id)
+            const query = {_id: ObjectId(id)};
+            const result = await usersCollection.deleteOne(query);
+            res.send(result);
+        })
+
         // Get All Buyer----------------------------->>
         app.get("/buyers", async(req, res)=>{
             const query = {role: "Buyer"};
