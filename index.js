@@ -73,7 +73,27 @@ async function run() {
             res.send({isBuyer:  buyer?.role === "Buyer"});
         })
 
-        // 
+        // Get All Seller----------------------------->>
+        app.get("/sellers", async(req, res)=>{
+            const query = {role: "Seller"};
+            const result = await usersCollection.find(query).toArray();
+            res.send(result);
+        })
+
+        // Delete All Seller--------->>
+        app.delete("/sellers/:id", async(req, res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await usersCollection.deleteOne(query);
+            res.send(result);
+        })
+
+        // Get All Buyer----------------------------->>
+        app.get("/buyers", async(req, res)=>{
+            const query = {role: "Buyer"};
+            const result = await usersCollection.find(query).toArray();
+            res.send(result);
+        })
 
         // get data
 
