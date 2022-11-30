@@ -7,10 +7,8 @@ const port = process.env.PORT || 5000;
 
 const app = express();
 
-// middleware
 app.use(cors());
 app.use(express.json());
-
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.vjjynh2.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
@@ -104,7 +102,7 @@ async function run() {
             res.send(result);
         })
 
-        // get data
+        // Get data
 
         app.get('/bookings' , async(req,res) =>{
             const email = req.query.email;
@@ -166,20 +164,15 @@ async function run() {
     finally{
 
     }
-
-
 }
 run().catch(console.log);
-
-
-
 
 app.get('/', async (req, res) => {
     res.send('Used server is running');
 });
 
 app.listen(port, () => console.log(`Used server also running running on ${port}`))
-
+module.exports = app;
 
 
 
